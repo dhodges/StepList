@@ -1,0 +1,10 @@
+#!/bin/sh
+
+SCRIPT_DIR=`dirname $0`
+PROJECT_DIR=`dirname $SCRIPT_DIR`
+
+find $PROJECT_DIR -iname \*.pyc | xargs rm
+
+subl -n $PROJECT_DIR
+subl -n $HOME/projects/atlas/atlas
+
