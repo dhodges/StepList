@@ -1,0 +1,8 @@
+[  
+  { "caption": "Stepper",
+    "children":
+    [
+      {"caption": "List step definitions", "command": "list_step_definitions"}
+    ]
+  }
+]
