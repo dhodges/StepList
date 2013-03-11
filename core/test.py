@@ -12,7 +12,7 @@ sys.path.append(abspath("../.."))
 from Stepper.core.stepper import Stepper
 
 
-def fixture_path(fname):
+def fixture_path(fname=""):
   return dirname(abspath(__file__))+"/fixtures/"+fname
 
 def plugin_settings_file():
@@ -30,7 +30,7 @@ class TestStepper(unittest.TestCase):
     global stepper
     global features_path
     features_path = fixture_path('features')
-    config  = {'project_data':{'folders': [{'path': features_path}]}}
+    config  = {'project_data':{'folders': [{'path': fixture_path()}]}}
     stepper = Stepper(config)
 
   def test_features_path(self):

@@ -1,6 +1,6 @@
 import re
 import glob
-from os.path import abspath
+from os.path import normpath
 
 class Stepper(object):
   def __init__(self, config):
@@ -11,10 +11,10 @@ class Stepper(object):
 
   def features_path(self):
     project_data = self.config['project_data']
-    return project_data['folders'][0]['path']
+    return normpath(project_data['folders'][0]['path']+'/features')
 
   def step_definition_files(self):
-    return glob.glob(abspath(self.features_path()+"/**/*_steps.rb"))
+    return glob.glob(self.features_path()+"/**/*_steps.rb")
 
   def lines_from(self, file):
     f = open(file, "r")
