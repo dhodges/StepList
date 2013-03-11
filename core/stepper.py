@@ -27,14 +27,14 @@ class Stepper(object):
     if not m:
       return None
     step = m.groups()[1]
-    return step
+    return step.strip()
 
   def steps_defined_in(self, file):
     steps = [self.step_from(line) for line in self.lines_from(file)]
     steps = [s for s in steps if s]
     return steps
 
-  def step_definition_list(self):
+  def step_definitions(self):
     steps = []
     for file in self.step_definition_files():
       steps.extend(self.steps_defined_in(file))

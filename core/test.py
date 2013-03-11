@@ -40,21 +40,8 @@ class TestStepper(unittest.TestCase):
     step_files = glob.glob(abspath(features_path+"/**/*_steps.rb"))
     self.assertEqual(stepper.step_definition_files(), step_files)
 
-  def test_step_definition_list(self):
-    definition_list = [
-      'I am authenticated as "(.*)"',
-      'I am authenticated as a performance testing author',
-      'I am authenticated as a read only user',
-      'I am authenticated as an author',
-      'I am authenticated as an editor',
-      'I am authenticated as user "(.*)" with password "(.*)"',
-      'I should be authenticated as "(.+)"',
-      'I should be prompted to authenticate',
-      'I should not be authenticated',
-      'user "(.+)" has password "(.+)"'
-    ]
-    self.maxDiff = None
-    self.assertEqual(stepper.step_definition_list(), definition_list)
+  def test_step_definitions(self):
+    self.assertEqual(len(stepper.step_definitions()), 518)
     
 
 if __name__ == '__main__':
