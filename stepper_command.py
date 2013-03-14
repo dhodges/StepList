@@ -8,15 +8,9 @@ class BaseCommand(sublime_plugin.TextCommand):
     settings = sublime.load_settings("Stepper.sublime-settings")
     # It's a pain having to copy these settings manually,
     # but sublime.settings has no way to iterate over its' keys.
-    config = {
-      "erase_setting":  self.erase_setting,
-      "set_setting":    self.set_setting,
-      "error_message":  sublime.error_message,
-      "set_timeout":    sublime.set_timeout,
+    return {
+      "project_data":     sublime.active_window().project_data(),
     }
-    print("Stepper config:")
-    print(config)
-    return config
 
   def erase_setting(self, setting):
     settings = sublime.load_settings("Stepper.sublime-settings")
