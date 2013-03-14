@@ -29,7 +29,14 @@ class BaseCommand(sublime_plugin.TextCommand):
     sublime.save_settings("Stepper.sublime-settings")
 
 class ListStepDefinitions(BaseCommand):
+  def on_done(self, index):
+    if index < 0:
+      return
+    text = self.steps[index]
+    snippet = self.stepper.snippet(text)
+    self.view.run_command("insert_snippet", {"contents": snippet})
+
   def run(self, edit):
-    Stepper(self.get_config()).list_step_definitions()
-
-
+    self.stepper = Stepper(self.get_config())
+    self.steps   = self.stepper.step_definitions()
+    self.view.window().show_quick_panel(self.steps, self.on_done, sublime.MONOSPACE_FONT)

@@ -9,7 +9,7 @@ from os.path  import dirname, abspath
 
 sys.path.append(abspath("../.."))
 
-from Stepper.core.stepper import Stepper
+from stepper import Stepper
 
 
 def fixture_path(fname=""):
@@ -43,6 +43,18 @@ class TestStepper(unittest.TestCase):
   def test_step_definitions(self):
     self.assertEqual(len(stepper.step_definitions()), 518)
     
+  def test_snippet(self):
+    text = '(?:|I )attach the file "([^\\"]*)" to "([^\\"]*)"(?: within "([^\\"]*)")?'
+    snippet = '(?:|I )attach the file "$1" to "$2"(?: within "$3")?'
+    self.assertEqual(stepper.snippet(text), snippet)
+
+    text = '"([^\\"]*)" resizer is not visible'
+    snippet = '"$1" resizer is not visible'
+    self.assertEqual(stepper.snippet(text), snippet)
+
+    text = '(?:|I )choose "([^\\"]*)"(?: within "([^\\"]*)")?'
+    snippet = '(?:|I )choose "$1"(?: within "$2")?'
+    self.assertEqual(stepper.snippet(text), snippet)
 
 if __name__ == '__main__':
   unittest.main()

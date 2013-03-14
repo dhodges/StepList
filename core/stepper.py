@@ -6,9 +6,6 @@ class Stepper(object):
   def __init__(self, config):
     self.config = config
 
-  def list_step_definitions(self):
-    print('list_step_definitions')
-
   def features_path(self):
     project_data = self.config['project_data']
     return normpath(project_data['folders'][0]['path']+'/features')
@@ -39,3 +36,11 @@ class Stepper(object):
     for file in self.step_definition_files():
       steps.extend(self.steps_defined_in(file))
     return sorted(steps)
+
+  def snippet(self, text):
+    self.index = 0
+    text = text.replace('"([^\\"]*)"', '"$_"')
+    def repl(text):
+      self.index += 1
+      return "$%s" % self.index
+    return re.sub('\$_', repl, text)
