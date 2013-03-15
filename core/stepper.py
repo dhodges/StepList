@@ -2,6 +2,9 @@ import re
 import glob
 from os.path import normpath
 
+def step_cmp(a, b):
+  return cmp(a.lower(), b.lower())
+
 class Stepper(object):
   def __init__(self, config):
     self.config = config
@@ -35,7 +38,7 @@ class Stepper(object):
     for file in self.step_definition_files():
       steps.extend(self.steps_defined_in(file))
     steps = [self.filter(s) for s in steps]
-    return sorted(steps, lambda x, y: cmp(x.lower(), y.lower()))
+    return sorted(steps, step_cmp)
 
   def filter(self, step_text):
     return step_text.replace('(?:|I )', 'I ')
