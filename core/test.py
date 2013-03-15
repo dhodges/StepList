@@ -42,19 +42,23 @@ class TestStepper(unittest.TestCase):
 
   def test_step_definitions(self):
     self.assertEqual(len(stepper.step_definitions()), 518)
+
+  def test_filter(self):
+    self.assertEqual(stepper.filter('(?:|I )choose "([^\\"]*)"(?: within "([^\\"]*)")?'),
+                                    'I choose "([^\\"]*)"(?: within "([^\\"]*)")?')
     
-  def test_snippet(self):
-    text = '(?:|I )attach the file "([^\\"]*)" to "([^\\"]*)"(?: within "([^\\"]*)")?'
-    snippet = '(?:|I )attach the file "$1" to "$2"(?: within "$3")?'
+  def assertEqualSnippet(self, text, snippet):
     self.assertEqual(stepper.snippet(text), snippet)
 
-    text = '"([^\\"]*)" resizer is not visible'
-    snippet = '"$1" resizer is not visible'
-    self.assertEqual(stepper.snippet(text), snippet)
+  def test_snippets(self):
+    self.assertEqualSnippet('"([^\\"]*)" resizer is not visible',
+                            '"$1" resizer is not visible')
 
-    text = '(?:|I )choose "([^\\"]*)"(?: within "([^\\"]*)")?'
-    snippet = '(?:|I )choose "$1"(?: within "$2")?'
-    self.assertEqual(stepper.snippet(text), snippet)
+    self.assertEqualSnippet('I attach the file "([^\\"]*)" to "([^\\"]*)"(?: within "([^\\"]*)")?',
+                            'I attach the file "$1" to "$2"(?: within "$3")?')
+
+    self.assertEqualSnippet('I choose "([^\\"]*)"(?: within "([^\\"]*)")?',
+                            'I choose "$1"(?: within "$2")?')
 
 if __name__ == '__main__':
   unittest.main()

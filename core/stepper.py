@@ -34,7 +34,11 @@ class Stepper(object):
     steps = []
     for file in self.step_definition_files():
       steps.extend(self.steps_defined_in(file))
+    steps = [self.filter(s) for s in steps]
     return sorted(steps, lambda x, y: cmp(x.lower(), y.lower()))
+
+  def filter(self, step_text):
+    return step_text.replace('(?:|I )', 'I ')
 
   def snippet(self, text):
     self.index = 0
