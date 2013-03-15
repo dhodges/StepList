@@ -7,8 +7,7 @@ class Stepper(object):
     self.config = config
 
   def features_path(self):
-    project_data = self.config['project_data']
-    return normpath(project_data['folders'][0]['path']+'/features')
+    return normpath(self.config['root_directory']+'/features')
 
   def step_definition_files(self):
     return glob.glob(self.features_path()+"/**/*_steps.rb")

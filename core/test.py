@@ -30,7 +30,7 @@ class TestStepper(unittest.TestCase):
     global stepper
     global features_path
     features_path = fixture_path('features')
-    config  = {'project_data':{'folders': [{'path': fixture_path()}]}}
+    config  = {'root_directory':fixture_path()}
     stepper = Stepper(config)
 
   def test_features_path(self):

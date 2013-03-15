@@ -1,7 +1,9 @@
 import sublime
 import sublime_plugin
-from Stepper.core.stepper import Stepper
-
+try:
+  from Stepper.core.stepper import Stepper
+except:
+  from core.stepper import Stepper
 
 class BaseCommand(sublime_plugin.TextCommand):
   def get_config(self):
@@ -9,7 +11,7 @@ class BaseCommand(sublime_plugin.TextCommand):
     # It's a pain having to copy these settings manually,
     # but sublime.settings has no way to iterate over its' keys.
     return {
-      "project_data":     sublime.active_window().project_data(),
+      "root_directory": self.root_directory()
     }
 
   def erase_setting(self, setting):
@@ -21,6 +23,12 @@ class BaseCommand(sublime_plugin.TextCommand):
     settings = sublime.load_settings("Stepper.sublime-settings")
     settings.set(name, value)
     sublime.save_settings("Stepper.sublime-settings")
+
+  def root_directory(self):
+    try:
+      return sublime.active_window().project_data()['folders'][0]['path']
+    except:
+      return sublime.active_window().folders()[0]
 
 class ListStepDefinitions(BaseCommand):
   def on_done(self, index):

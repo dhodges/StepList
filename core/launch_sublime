@@ -5,6 +5,6 @@ PROJECT_DIR=`dirname $SCRIPT_DIR`
 
 find $PROJECT_DIR -iname \*.pyc | xargs rm
 
-subl3 -n $PROJECT_DIR
-subl3 -n $HOME/projects/atlas/atlas
+subl -n $PROJECT_DIR
+subl -n $HOME/projects/atlas/atlas
 
