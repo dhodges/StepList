@@ -2,17 +2,15 @@ import re
 import glob
 from os.path import normpath
 
-def step_cmp(a, b):
-  return cmp(a.lower(), b.lower())
 
-class Stepper(object):
+class Step(object):
   def __init__(self, config):
     self.config = config
 
   def features_path(self):
     return normpath(self.config['root_directory']+'/features')
 
-  def step_definition_files(self):
+  def definition_files(self):
     return glob.glob(self.features_path()+"/**/*_steps.rb")
 
   def lines_from(self, file):
@@ -33,12 +31,13 @@ class Stepper(object):
     steps = [s for s in steps if s]
     return steps
 
-  def step_definitions(self):
+  def definitions(self):
     steps = []
-    for file in self.step_definition_files():
+    for file in self.definition_files():
       steps.extend(self.steps_defined_in(file))
     steps = [self.filter(s) for s in steps]
-    return sorted(steps, step_cmp)
+    steps.sort(key=str.lower)
+    return steps
 
   def filter(self, step_text):
     return step_text.replace('(?:|I )', 'I ')

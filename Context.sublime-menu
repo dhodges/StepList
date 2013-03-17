@@ -1,5 +1,5 @@
 [  
-  { "caption": "Stepper",
+  { "caption": "StepList",
     "children":
     [
       {"caption": "List step definitions", "command": "list_step_definitions"}
