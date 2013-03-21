@@ -1,0 +1,11 @@
+[
+  {
+    "id": "tools",
+    "children": [
+      {
+        "caption": "List Step Definitions",
+        "command": "list_step_definitions"
+      }
+    ]
+  }
+]
