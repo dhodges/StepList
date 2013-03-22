@@ -5,11 +5,9 @@ try:
 except:
   from core.steps import Step
 
+
 class BaseCommand(sublime_plugin.TextCommand):
   def get_config(self):
-    settings = sublime.load_settings("Steplist.sublime-settings")
-    # It's a pain having to copy these settings manually,
-    # but sublime.settings has no way to iterate over its' keys.
     return {
       "root_directory": self.root_directory()
     }
@@ -20,15 +18,35 @@ class BaseCommand(sublime_plugin.TextCommand):
     except:
       return sublime.active_window().folders()[0]
 
-class ListStepDefinitions(BaseCommand):
+
+class InsertStepDefinition(BaseCommand):
   def on_done(self, index):
     if index < 0:
       return
-    text = self.steps[index]
+    text = self.steps[index][0]
     snippet = self.step.snippet(text)
     self.view.run_command("insert_snippet", {"contents": snippet})
 
   def run(self, edit):
     self.step  = Step(self.get_config())
     self.steps = self.step.definitions()
-    self.view.window().show_quick_panel(self.steps, self.on_done, sublime.MONOSPACE_FONT)
+    step_list  = [s[0] for s in self.steps]
+    self.view.window().show_quick_panel(step_list, self.on_done, sublime.MONOSPACE_FONT)
+
+
+class VisitStepDefinition(InsertStepDefinition):
+  def on_done(self, index):
+    if index < 0:
+      return
+    step  = self.steps[index]
+    file  = step[1]
+    line  = step[2]
+    fname = "%s:%s:0" % (file, line)
+    self.view.window().run_command("open_step_definition", {'file_and_line':fname})
+
+
+class OpenStepDefinition(sublime_plugin.TextCommand):
+  def run(self, edit, **kwargs):
+    fname = kwargs['file_and_line']
+    print("opening step definition: %s" % fname)
+    view  = sublime.active_window().open_file(fname, sublime.ENCODED_POSITION)

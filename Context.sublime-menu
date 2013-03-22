@@ -1,6 +1,4 @@
 [  
-  {
-    "caption": "List Step Definitions",
-    "command": "list_step_definitions"
-  }
+  {"caption": "Visit Step Definition",  "command": "visit_step_definition"},
+  {"caption": "Insert Step Definition", "command": "insert_step_definition"}
 ]

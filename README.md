@@ -2,17 +2,17 @@
 
 A plugin for Sublime Text 2 and Sublime Text 3.
 
-Display a list of all RSpec/Cucumber step definitions in the current project.
+Display all RSpec/Cucumber step definitions in the current project, using the QuickPanel to find and selectively filter.
 
 ![screenshot](https://raw.github.com/dhodges/StepList/master/core/fixtures/steps.png)
 
-The chosen step is inserted as a text snippet.
+Opens the chosen step definition at source, or inserts it as a text snippet.
 
-To install, clone this repo into your Sublime Text 2 `Packages` directory:
+To install, clone this repo into your Sublime Text `Packages` directory:
 ```
     git clone https://github.com/dhodges/StepList.git
 ```
 
-Provides a single command:
 
-* List All Step Definitions (OS X: `⌘-⌥-L`, Linux, Windows: `Ctrl-Alt-L`)
+* Visit Step Definition (OS X: `⌘-⌥-L`, Linux, Windows: `Ctrl-Alt-L`)
+* Insert Step Definition (OS X: `⌘-⌥-Shift-L`, Linux, Windows: `Ctrl-Alt-Shift-L`)

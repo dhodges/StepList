@@ -28,15 +28,15 @@ class Step(object):
     return self.filter(m.groups()[1].strip())
 
   def steps_defined_in(self, file):
-    steps = [self.step_from(line) for line in self.lines_from(file)]
-    steps = [s for s in steps if s]
-    return steps
+    lines = self.lines_from(file)
+    steps = [(self.step_from(line), file, ndx+1) for ndx, line in enumerate(self.lines_from(file))]
+    return  [s for s in steps if s[0]]
 
   def definitions(self):
     steps = []
     for file in self.definition_files():
       steps.extend(self.steps_defined_in(file))
-    return sorted(steps, key=str.lower
+    return sorted(steps, key=lambda x:str.lower(x[0]))
 
   def snippet(self, text):
     self.index = 0

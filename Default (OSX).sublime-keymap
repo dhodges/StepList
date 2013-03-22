@@ -1,3 +1,4 @@
 [  
-    {"keys": ["alt+super+l"], "command": "list_step_definitions"}
+  {"keys": ["super+alt+l"],       "command": "visit_step_definition"},
+  {"keys": ["shift+super+alt+l"], "command": "insert_step_definition"}
 ] 
