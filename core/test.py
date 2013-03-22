@@ -37,7 +37,7 @@ class TestStep(unittest.TestCase):
     self.assertEqual(stepper.features_path(), features_path)
 
   def test_definition_files(self):
-    step_files = glob.glob(abspath(features_path+"/**/*_steps.rb"))
+    step_files = glob.glob(features_path+"/**/*_steps.rb")
     self.assertEqual(stepper.definition_files(), step_files)
 
   def test_definitions(self):

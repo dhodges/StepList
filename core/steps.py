@@ -19,12 +19,13 @@ class Step(object):
     f.close()
     return lines
 
+  def filter(self, step):
+    return step.replace('(?:|I )', 'I ')
+
   def step_from(self, line):
     m = re.search('(Given|And|When|Then).*/[\^]*([^$]+)[$]*/', line)
-    if not m:
-      return None
-    step = m.groups()[1]
-    return step.strip()
+    if not m: return None
+    return self.filter(m.groups()[1].strip())
 
   def steps_defined_in(self, file):
     steps = [self.step_from(line) for line in self.lines_from(file)]
@@ -35,12 +36,7 @@ class Step(object):
     steps = []
     for file in self.definition_files():
       steps.extend(self.steps_defined_in(file))
-    steps = [self.filter(s) for s in steps]
-    steps.sort(key=str.lower)
-    return steps
-
-  def filter(self, step_text):
-    return step_text.replace('(?:|I )', 'I ')
+    return sorted(steps, key=str.lower
 
   def snippet(self, text):
     self.index = 0
