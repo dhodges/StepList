@@ -30,11 +30,26 @@ class InsertStepDefinition(BaseCommand):
     self.view.run_command("insert_snippet", {"contents": snippet})
 
   def run(self, edit):
-    self.view.window().show_quick_panel(step_list, self.on_done, sublime.MONOSPACE_FONT)
     self.config = self.get_config()
     self.step   = Step(self.config)
     self.steps  = self.step.definitions()
     step_list   = [s[0] for s in self.steps]
+    self.view.window().show_quick_panel(
+      step_list, 
+      self.on_done, 
+      sublime.MONOSPACE_FONT,
+      on_highlight = lambda ndx: self.highlight_entry(ndx))
+
+  def highlight_entry(self, ndx):
+    if not self.config['browse_step_definitions']:
+      return
+    step  = self.steps[ndx]
+    file  = step[1]
+    line  = step[2]
+    fname = "%s:%s:0" % (file, line)
+    sublime.active_window().open_file(
+      fname,
+      sublime.TRANSIENT | sublime.ENCODED_POSITION)
 
 
 class VisitStepDefinition(InsertStepDefinition):
