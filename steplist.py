@@ -8,8 +8,10 @@ except:
 
 class BaseCommand(sublime_plugin.TextCommand):
   def get_config(self):
+    settings = sublime.load_settings("StepList.sublime-settings")
     return {
-      "root_directory": self.root_directory()
+      'browse_step_definitions': settings.get('browse_step_definitions'),
+      "root_directory":          self.root_directory()
     }
 
   def root_directory(self):
@@ -28,10 +30,11 @@ class InsertStepDefinition(BaseCommand):
     self.view.run_command("insert_snippet", {"contents": snippet})
 
   def run(self, edit):
-    self.step  = Step(self.get_config())
-    self.steps = self.step.definitions()
-    step_list  = [s[0] for s in self.steps]
     self.view.window().show_quick_panel(step_list, self.on_done, sublime.MONOSPACE_FONT)
+    self.config = self.get_config()
+    self.step   = Step(self.config)
+    self.steps  = self.step.definitions()
+    step_list   = [s[0] for s in self.steps]
 
 
 class VisitStepDefinition(InsertStepDefinition):
