@@ -11,6 +11,7 @@ class BaseCommand(sublime_plugin.TextCommand):
     settings = sublime.load_settings("StepList.sublime-settings")
     return {
       'browse_step_definitions': settings.get('browse_step_definitions'),
+      'sublime_text_version':    int(sublime.version()[0]),
       "root_directory":          self.root_directory()
     }
 
@@ -33,12 +34,15 @@ class InsertStepDefinition(BaseCommand):
     self.config = self.get_config()
     self.step   = Step(self.config)
     self.steps  = self.step.definitions()
-    step_list   = [s[0] for s in self.steps]
-    self.view.window().show_quick_panel(
-      step_list, 
-      self.on_done, 
-      sublime.MONOSPACE_FONT,
-      on_highlight = lambda ndx: self.highlight_entry(ndx))
+    self.show_steps([s[0] for s in self.steps])
+
+  def show_steps(self, step_list):
+    if self.config['sublime_text_version'] == 2:
+      self.view.window().show_quick_panel(step_list, self.on_done, sublime.MONOSPACE_FONT)
+
+    elif self.config['sublime_text_version'] == 3:
+      self.view.window().show_quick_panel(step_list, self.on_done, sublime.MONOSPACE_FONT, 
+        on_highlight=lambda ndx: self.highlight_entry(ndx))
 
   def highlight_entry(self, ndx):
     if not self.config['browse_step_definitions']:
