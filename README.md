@@ -4,7 +4,7 @@ A plugin for Sublime Text 2 and Sublime Text 3.
 
 Display all RSpec/Cucumber step definitions in the current project, using the QuickPanel to find and selectively filter.
 
-![screenshot](https://raw.github.com/dhodges/StepList/master/core/fixtures/steps.png)
+![screenshot](https://raw.github.com/dhodges/StepList/master/core/fixtures/images/steps.png)
 
 Opens the chosen step definition at source, or inserts it as a text snippet.
 
